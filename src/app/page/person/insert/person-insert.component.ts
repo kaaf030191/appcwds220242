@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule, UntypedFormGroup } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, UntypedFormGroup, Validators } from '@angular/forms';
 import { PersonService } from '../../../api/person.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
 	selector: 'person-insert',
 	standalone: true,
 	imports: [
+		CommonModule,
 		FormsModule,
 		ReactiveFormsModule
 	],
@@ -28,16 +30,23 @@ export class PersonInsertComponent {
 		private personService: PersonService
 	) {
 		this.frmPersonInsert = this.formBuilder.group({
-			dni: ['', null],
-			firstName: ['', null],
-			surName: ['', null],
-			email: ['', null],
-			birthDate: ['', null],
-			gender: ['', null]
+			dni: ['', [Validators.required, Validators.pattern(/^([0-9]{8})?$/)]],
+			firstName: ['', [Validators.required]],
+			surName: ['', [Validators.required]],
+			email: ['', [Validators.required, Validators.pattern(/^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})?$/)]],
+			birthDate: ['', [Validators.required]],
+			gender: ['', [Validators.required]]
 		});
 	}
 
 	public save(): void {
+		if(!this.frmPersonInsert.valid) {
+			this.frmPersonInsert.markAllAsTouched();
+			this.frmPersonInsert.markAsDirty();
+
+			return;
+		}
+
 		let formData = new FormData();
 
 		formData.append('dni', this.dniFb.value);

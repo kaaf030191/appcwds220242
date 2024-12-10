@@ -29,4 +29,15 @@ export class PersonGetAllComponent {
 			}
 		});
 	}
+
+	delete(idPerson: string): void {
+		this.personService.delete(idPerson).subscribe({
+			next: (response: any) => {
+				this.listPerson = this.listPerson.filter(x => x.idPerson != idPerson);
+			},
+			error: (error: any) => {
+				console.log(error);
+			}
+		});
+	}
 }
