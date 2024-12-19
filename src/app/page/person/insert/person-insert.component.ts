@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, UntypedFormGroup, Validators } from '@angular/forms';
 import { PersonService } from '../../../api/person.service';
 import { CommonModule } from '@angular/common';
+import { NotifyComponent } from '../../../component/notify/notify.component';
 
 @Component({
 	selector: 'person-insert',
@@ -9,7 +10,8 @@ import { CommonModule } from '@angular/common';
 	imports: [
 		CommonModule,
 		FormsModule,
-		ReactiveFormsModule
+		ReactiveFormsModule,
+		NotifyComponent
 	],
 	templateUrl: './person-insert.component.html',
 	styleUrl: './person-insert.component.scss'
@@ -25,12 +27,15 @@ export class PersonInsertComponent {
 	get birthDateFb() { return this.frmPersonInsert.controls['birthDate']; }
 	get genderFb() { return this.frmPersonInsert.controls['gender']; }
 
+	typeResponse: string = '';
+	listMessageResponse: string[] = [];
+
 	constructor(
 		private formBuilder: FormBuilder,
 		private personService: PersonService
 	) {
 		this.frmPersonInsert = this.formBuilder.group({
-			dni: ['', [Validators.required, Validators.pattern(/^([0-9]{8})?$/)]],
+			dni: ['', []],
 			firstName: ['', [Validators.required]],
 			surName: ['', [Validators.required]],
 			email: ['', [Validators.required, Validators.pattern(/^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})?$/)]],
@@ -57,7 +62,15 @@ export class PersonInsertComponent {
 
 		this.personService.insert(formData).subscribe({
 			next: (response: any) => {
-				console.log(response);
+				this.typeResponse = response.mo.type;
+				this.listMessageResponse = response.mo.listMessage;
+
+				switch(response.mo.type) {
+					case 'success':
+						this.frmPersonInsert.reset();
+
+						break;
+				}
 			},
 			error: (error: any) => {
 				console.log(error);
