@@ -35,7 +35,7 @@ export class PersonInsertComponent {
 		private personService: PersonService
 	) {
 		this.frmPersonInsert = this.formBuilder.group({
-			dni: ['', []],
+			dni: ['', [Validators.required, Validators.pattern(/^[0-9]{8}$/)]],
 			firstName: ['', [Validators.required]],
 			surName: ['', [Validators.required]],
 			email: ['', [Validators.required, Validators.pattern(/^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})?$/)]],
