@@ -1,0 +1,13 @@
+<div class="container text-center" style="margin-top: 7px;">
+	<app-notify [type]="typeResponse" [listMessage]="listMessageResponse"></app-notify>
+	<div id="divLogin">
+		<form [formGroup]="frmPersonLogin">
+			<label for="">Usuario</label>
+			<input type="text" formControlName="dni" class="form-control">
+			<label for="">Contraseña</label>
+			<input type="password" formControlName="password" class="form-control">
+			<hr>
+			<button type="button" class="btn btn-primary w-100" (click)="login()">Ingresar</button>
+		</form>
+	</div>
+</div>

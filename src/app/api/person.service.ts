@@ -15,6 +15,10 @@ export class PersonService {
 		return this.httpClient.get(`http://localhost:8080/person/getdata`);
 	}
 
+	public login(formData: FormData): Observable<any> {
+		return this.httpClient.post(`http://localhost:8080/person/login`, formData);
+	}
+
 	public insert(formData: FormData): Observable<any> {
 		return this.httpClient.post(`http://localhost:8080/person/insert`, formData);
 	}
