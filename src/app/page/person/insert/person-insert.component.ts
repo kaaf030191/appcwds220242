@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, UntypedFormGroup, Validators } from '@angular/forms';
 import { PersonService } from '../../../api/person.service';
 import { CommonModule } from '@angular/common';
 import { NotifyComponent } from '../../../component/notify/notify.component';
@@ -21,6 +21,8 @@ export class PersonInsertComponent {
 	frmPersonInsert: UntypedFormGroup;
 
 	get dniFb() { return this.frmPersonInsert.controls['dni']; }
+	get passwordFb() { return this.frmPersonInsert.controls['password']; }
+	get passwordRetypeFb() { return this.frmPersonInsert.controls['passwordRetype']; }
 	get firstNameFb() { return this.frmPersonInsert.controls['firstName']; }
 	get surNameFb() { return this.frmPersonInsert.controls['surName']; }
 	get emailFb() { return this.frmPersonInsert.controls['email']; }
@@ -36,16 +38,25 @@ export class PersonInsertComponent {
 	) {
 		this.frmPersonInsert = this.formBuilder.group({
 			dni: ['', [Validators.required, Validators.pattern(/^[0-9]{8}$/)]],
+			password: ['', [Validators.required]],
+			passwordRetype: ['', []],
 			firstName: ['', [Validators.required]],
 			surName: ['', [Validators.required]],
-			email: ['', [Validators.required, Validators.pattern(/^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})?$/)]],
 			birthDate: ['', [Validators.required]],
 			gender: ['', [Validators.required]]
 		});
 	}
 
+	public diffPassword(): boolean {	
+		if(this.passwordFb.value != this.passwordRetypeFb.value) {
+			return true;
+		}
+	
+		return false;
+	}
+
 	public save(): void {
-		if(!this.frmPersonInsert.valid) {
+		if(!this.frmPersonInsert.valid || this.diffPassword()) {
 			this.frmPersonInsert.markAllAsTouched();
 			this.frmPersonInsert.markAsDirty();
 
@@ -59,6 +70,7 @@ export class PersonInsertComponent {
 		formData.append('surName', this.surNameFb.value);
 		formData.append('birthDate', this.birthDateFb.value);
 		formData.append('gender', this.genderFb.value);
+		formData.append('password', this.passwordFb.value);
 
 		this.personService.insert(formData).subscribe({
 			next: (response: any) => {

@@ -4,7 +4,7 @@ import { PersonGetAllComponent } from './page/person/getall/person-get-all.compo
 import { PersonLoginComponent } from './page/person/login/person-login.component';
 
 export const routes: Routes = [
-	{ path: '', redirectTo: '/', pathMatch: 'full' },
+	{ path: '', redirectTo: 'person/getall', pathMatch: 'full' },
 	{ path: 'person/login', component: PersonLoginComponent },
 	{ path: 'person/insert', component: PersonInsertComponent },
 	{ path: 'person/getall', component: PersonGetAllComponent }

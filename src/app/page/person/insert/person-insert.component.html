@@ -24,16 +24,12 @@
 						<div *ngIf="(surNameFb.touched || surNameFb.dirty) && surNameFb.errors && surNameFb.hasError('required')" class="divError">Este campo es requerido.</div>
 					</div>
 					<div class="col-md-3 mb-3">
-						<label for="email" class="form-label">Correo</label>
-						<input type="text" formControlName="email" class="form-control" id="email" placeholder="Obligatorio">
-						<div *ngIf="(emailFb.touched || emailFb.dirty) && emailFb.errors && emailFb.hasError('required')" class="divError">Este campo es requerido.</div>
-						<div *ngIf="(emailFb.touched || emailFb.dirty) && emailFb.errors && emailFb.hasError('pattern')" class="divError">Formato incorrecto.</div>
-					</div>
-					<div class="col-md-3 mb-3">
 						<label for="birthDate" class="form-label">Fecha de Nacimiento</label>
 						<input type="date" formControlName="birthDate" class="form-control" id="birthDate">
 						<div *ngIf="(birthDateFb.touched || birthDateFb.dirty) && birthDateFb.errors && birthDateFb.hasError('required')" class="divError">Este campo es requerido.</div>
 					</div>
+				</div>
+				<div class="row">
 					<div class="col-md-3 mb-3">
 						<label for="gender" class="form-label">Género</label>
 						<select formControlName="gender" class="form-select" id="gender">
@@ -41,6 +37,17 @@
 							<option value="0">Femenino</option>
 						</select>
 						<div *ngIf="(genderFb.touched || genderFb.dirty) && genderFb.errors && genderFb.hasError('required')" class="divError">Este campo es requerido.</div>
+					</div>
+					<div class="col-md-3 mb-3">
+						<label for="password" class="form-label">Contraseña</label>
+						<input type="password" formControlName="password" class="form-control" id="password" placeholder="Obligatorio">
+						<div *ngIf="(passwordFb.touched || passwordFb.dirty) && passwordFb.errors && passwordFb.hasError('required')" class="divError">Este campo es requerido.</div>
+						<div *ngIf="(passwordFb.touched || passwordRetypeFb.touched || passwordFb.dirty || passwordRetypeFb.dirty) && diffPassword()" class="divError">Las contraseñas no coinciden.</div>
+					</div>
+					<div class="col-md-3 mb-3">
+						<label for="passwordRetype" class="form-label">Repita contraseña</label>
+						<input type="password" formControlName="passwordRetype" class="form-control" id="passwordRetype" placeholder="Obligatorio">
+						<div *ngIf="(passwordFb.touched || passwordRetypeFb.touched || passwordFb.dirty || passwordRetypeFb.dirty) && diffPassword()" class="divError">Las contraseñas no coinciden.</div>
 					</div>
 				</div>
 				<hr>
