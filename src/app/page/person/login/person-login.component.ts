@@ -49,6 +49,9 @@ export class PersonLoginComponent {
 
 				switch(response.mo.type) {
 					case 'success':
+						localStorage.setItem('sessionIdPerson', response.dto.person.idPerson);
+						localStorage.setItem('sessionFirstName', response.dto.person.firstName);
+
 						this.router.navigate(['/person/getall']);
 
 						break;
