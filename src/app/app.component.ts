@@ -20,8 +20,8 @@ export class AppComponent {
 	constructor() {}
 
 	public existsLogin() {
-		return localStorage.getItem('sessionIdPerson') != undefined
-		&& localStorage.getItem('sessionIdPerson') != null
-		&& localStorage.getItem('sessionIdPerson') != 'undefined';
+		return localStorage.getItem('sessionJwtToken') != undefined
+		&& localStorage.getItem('sessionJwtToken') != null
+		&& localStorage.getItem('sessionJwtToken') != 'undefined';
 	}
 }
